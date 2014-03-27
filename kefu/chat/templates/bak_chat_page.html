@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Example Page</title>
+	<link href="/static/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<!-- Le styles -->
+	<link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script>
+	$(function() {
+		
+		$( "#accordion" ).accordion();
+		/*
+		
+		$( "#button" ).button();
+		$( "#radioset" ).buttonset();
+		
+		*/
+		$( "#working_panel" ).draggable();		
+		$( "#tabs" ).tabs();
+		
+		//$( "#chatting-tab").append('<h3>trying! add a new world!</h3>');
+		
+		$( "#dialog" ).dialog({
+			autoOpen: false,
+			width: 550,
+			height:500,
+			buttons: [
+				{
+					text: "Ok",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				},
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});
+
+		$( "#dialog2" ).dialog({
+                        autoOpen: false,
+                        width: 550,
+                        height:500,
+                        buttons: [
+                                {
+                                        text: "Ok",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                },
+                                {
+                                        text: "Cancel",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                }
+                        ]
+                });
+		// Link to open the dialog
+		$("#dialog-link").click(function( event ) {
+			$( "#dialog" ).dialog( "open" );
+			//event.preventDefault();
+		});
+
+
+               $("#Alex").click(function( event ) {
+                     $( "#dialog2" ).dialog( "open" );
+                        //event.preventDefault();
+                });
+
+		// Hover states on the static widgets
+		$( "#dialog-link, #icons li" ).hover(
+			function() {
+				$( this ).addClass( "ui-state-hover" );
+			},
+			function() {
+				$( this ).removeClass( "ui-state-hover" );
+			}
+		);
+	
+	});
+
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+
+	
+	function MsgSend(ele){
+		var group_name = $(ele).attr("name");
+		//alert(group_name);
+		message = $("#" + group_name +"-msg").val();
+		if ( message != "" ){
+			var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+			$(group_name).append("<br />" + time2 + "<br />&nbsp;&nbsp;" + $("#" + group_name +"-msg" ).val());
+			$("#{{group}}-msg").val('');
+		}// end if 
+	}
+
+	function openChatWindow(ele){
+		var id = $(ele).attr("id");
+		//$("#tabs ul").append('<li><a href="#test">' + id + '</a></li>');
+		//$("#tabs").append('<div id="test">kdfjafsdfsafsfsfsf</div>');
+		$("#tabs-1").clone().appendTo("#tabs"); // <li><a href="#tabs-1">First</a></li>
+
+	} //end openChatWindow
+	</script>
+	<style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+
+	.div-height{border:1px solid black; width:600px; height:500px; }
+	.div-height3{border:1px solid black; width:150px; height:505px; }
+	.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
+	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
+
+
+.left {
+    position: relative;
+    width:100%; 
+    overflow:auto;
+    height:80%;
+   
+}
+.contact_list {
+	width:150px;
+	height:100%;
+	font-size:150%;
+	text-align:center;
+	overflow:auto;
+	background-color:green;
+}
+.chat_window{
+    position: relative;
+    text-align: left;
+    margin-left: 170px;
+
+	}
+
+.chat_group{
+    float: left;
+    padding-left:5px;
+    position: relative;
+    height:10px;	
+	}
+.right {
+    position: relative;
+    text-align: left;
+    margin-left: 470px;
+    background-color: yellow;
+	}
+
+.bottom {
+	position:absolute;
+	bottom:-3px;
+	left:4px;
+	height:65px;
+	width:84%;
+	}
+
+.button_bottom {
+        position:absolute;
+        bottom:30px;
+        right:10px;
+        }
+	</style>
+</head>
+
+
+<body>
+<div class="container pull-left" id="working_panel"> <!--container-->
+
+<!--h4 id='ClientName' >{{ClientName}}</h4-->
+<div class="chat_group">
+<!-- Accordion -->
+<h2 class="demoHeaders">聊天室</h2>
+<!--div id="accordion" class="div-height3">
+	{% for group,contact_list in group_dic.items %}
+		<h3 > {{group}}</h3>
+		<div>
+		{%for contact in contact_list %}
+			{{ contact }}<br />
+		{% endfor%}	
+		<br />
+		<a href="javascript:void(0);"  onclick="openChatWindow(this)">进入聊天室</a>
+		</div>
+	{%  endfor %}
+		   
+</div-->
+
+</div>
+
+<div class="chat_window">
+<!-- Tabs -->
+<!--h2 class="demoHeaders">聊天面板</h2>
+<div id="tabs" class="div-height">
+        <ul>
+                <li><a href="#tabs-1">First</a></li>
+                <li><a href="#tabs-2">Second</a></li>
+                <li><a href="#tabs-3">Third</a></li>
+		<li><a href="#TT">TT</a></li>
+        </ul>
+        <div  id="tabs-1">
+	    <div class='left' id="chatting-tab">
+		<p class="pull-right" style="color:blue"><br /><br />hey You! what's up !</p>
+
+	    </div>
+	    <div class="right "> Chating with Alex</div>
+	    <textarea align=left id="msg" name='msg' class="bottom"> input here</textarea>
+	     <button type="button" class="button_bottom btn btn-success" onclick="MsgSend()">Send</button>
+	</div>
+        <div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
+        <div id="tabs-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
+
+	<div id="TT">dfaf</div>
+</div>
+
+</div-->
+
+<!-- Dialog NOTE: Dialog is not generated by UI in this demo so it can be visually styled in themeroller-->
+<!--p><a href="#"  id="dialog-link"  class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>Open Dialog</a></p-->
+
+<!-- ui-dialog -->
+<div id="dialog" title="Dialog Title">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+{% for clientname,contact_list  in online_clients.items %}
+	<script  type="text/javascript">
+	        function {{clientname}}_MsgSend(){
+			//var group_name = $(ele).attr("name");
+			//alert(group_name);
+			var client = $("{{clientname}}").val();
+			//alert(client);	
+			message = $("#{{clientname}}-msg").val();
+			if ( message != "" ){
+				var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+				$("#{{clientname}}-chatWin" ).append("<p style='color:red;'><br />"  + client + "&nbsp;" + time2 + "<br />&nbsp;&nbsp;" + $( "#{{clientname}}-msg" ).val() + "</p>");
+				$("#{{clientname}}-msg").val('');
+				var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+				objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll
+				
+				$.post("/sendMsg/",{msg: message, 'client':client ,'room_name':'{{clientname}}'  }); // .done(function( return_data){
+				//	alert("Data return:" + return_data);
+				//});
+			}// end if 
+        	}
+		
+
+
+		$(function() {
+		 $( "#{{ clientname}}" ).dialog({
+                        autoOpen: false,
+                        width: 950,
+                        height:700,
+                        /*buttons: [
+                                {
+                                        text: "Ok",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                },
+                                {
+                                        text: "Cancel",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                }
+                        ]*/
+                });
+                // Link to open the dialog
+		// catch enter key
+		$("#{{clientname}}-msg").keyup(function(event){
+    			if(event.keyCode == 13){
+        			$("#{{clientname}}-msg-button").click();
+   			 }
+		}); //end keyup
+		
+                $("#{{ clientname }}-link").click(function( event ) {
+                        $( "#{{clientname}}" ).dialog( "open" );
+                        event.preventDefault();
+			var client = $("{{clientname}}").val();
+			var auto_refresh = setInterval(
+			  function()
+			  {
+			     if ($("#{{clientname}}").dialog("isOpen")){
+				$.get('/getNewMsg/',{'client':client, 'room':'{{clientname}}' },
+				   function(return_data){
+					/*var content = document.getElementById('cmd_result');
+					var CMD_RESULT = JSON.parse(return_data);
+					var finished_tasks = CMD_RESULT[1].task_info.success_num + CMD_RESULT[1].task_info.failed_num	
+					if(finished_tasks == CMD_RESULT[1].task_info.total_task){
+					 clearInterval(auto_refresh);
+					}// end if */
+					if (return_data != "NoNewMessage"){
+						MsgReturn = JSON.parse(return_data);	
+						for (var i=0; i<MsgReturn.length; i++){
+							for ( var key in MsgReturn[i]){
+								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" + MsgReturn[i][key].message );
+							};//end for
+							//$("#{{clientname}}-chatWin" ).append("<br />" + MsgReturn[i]);
+						};
+						var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+                                		objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll	
+						//$("#{{clientname}}-chatWin" ).append("<br />" + return_data );
+					} //end if 
+
+				    	//alert(return_data);
+				   } //end callback func
+				); //end get 2
+			     } else {
+				clearInterval(auto_refresh);
+			     };
+		       },3000);//for auto refresh
+                });
+		});	
+	</script>
+	
+        <h3><a href="#"  id="{{clientname}}-link"  >{{ clientname }}</a></h3>
+        <div id="{{  clientname}}" title="chating with {{clientname}}">
+		<div class="left" id="{{clientname}}-chatWin" > 
+			<div class="contact_list pull-right" >
+				<br />
+				<p> Notice Board</p>
+				<br />
+				{% for contact in contact_list %}
+					{{ contact}} <br />
+				{% endfor %}
+			</div>
+                <!--p>s nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p-->
+		</div>
+		<textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> input here</textarea>
+             	<button   align=right id="{{clientname}}-msg-button" type="button" name="{{ clientname}}" class="button_bottom btn btn-success" onclick="{{clientname}}_MsgSend()">Send</button>		
+        </div>
+		
+{% endfor%}
+</div> <!-- end container-->
+
+</body>
+
+</html>

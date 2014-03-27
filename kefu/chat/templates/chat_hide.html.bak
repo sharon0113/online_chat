@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="us">
+<head>
+        <meta charset="utf-8">
+        <title>jQuery UI Example Page</title>
+        <link href="/static/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+        <!-- Le styles -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.js"></script>
+	<script>
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+
+	function openChatWindow(ele){
+		var id = $(ele).attr("id");
+		//$("#tabs ul").append('<li><a href="#test">' + id + '</a></li>');
+		//$("#tabs").append('<div id="test">kdfjafsdfsafsfsfsf</div>');
+		$("#tabs-1").clone().appendTo("#tabs"); // <li><a href="#tabs-1">First</a></li>
+
+	} //end openChatWindow
+	</script>
+	<style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	/*add */
+	#contact-left {
+		background-color:#EEEEEE;
+		height:95%;
+		width:75%;
+		float:left;
+	}
+	#contact-right {
+		background-color:#6495ED;
+		height:83%;
+		width:25%;
+		float:right;
+	}
+	.div-height{border:1px solid black; width:600px; height:500px; }
+	.div-height3{border:1px solid black; width:150px; height:505px; }
+	.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
+	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
+
+
+.left {
+    position: relative;
+    width:100%; 
+    overflow:auto;
+    height:80%;
+   
+}
+.left2 {
+	position: relative;
+	width:100%;
+	height:80%;
+	float:left;
+
+}
+.contact_list {
+	width:150px;
+	height:100%;
+	font-size:150%;
+	text-align:center;
+	overflow:auto;
+	background-color:#6495ED;
+}
+
+.contact_list2 {
+	width:150px;
+	height:100%;
+	font-size:150%;
+	text-align:center;
+	overflow:auto;
+	background-color:yellow;
+}
+.chat_window{
+    position: relative;
+    text-align: left;
+    margin-left: 170px;
+
+	}
+
+.chat_group{
+    float: left;
+    padding-left:5px;
+    position: relative;
+    height:10px;	
+	}
+.right {
+    position: relative;
+    text-align: left;
+    margin-left: 470px;
+    background-color: yellow;
+	}
+
+.bottom {
+	position:absolute;
+	bottom:-3px;
+	left:4px;
+	height:65px;
+	width:72%;
+	}
+
+.button_bottom {
+        position:absolute;
+        bottom:30px;
+        right:20px;
+        }
+	</style>
+</head>
+
+
+<body>
+
+
+
+
+
+<div class="container pull-left" id="working_panel"> <!--container-->
+
+
+	<script  type="text/javascript">
+                function MsgSend_{{clientname}}(){
+		var client = "{{teacher}}";
+		message = $("#{{clientname}}-msg").val();
+		if ( message != "" ){
+			var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+			$( "#{{clientname}}-chatWin").append("<p style='color:red;'><br />" + time2 + "<br />&nbsp;&nbsp;" + $("#{{clientname}}-msg").val()+"</p>");
+			$("#{{clientname}}-msg").val('');
+                        var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+                        objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll 滚动条自动下拉
+                                
+                        $.post("/sendMsg/",{msg: message, 'client':client ,'room_name':'{{clientname}}'  }); //推送消息，客户名，聊天室名 
+		}// end if 
+		}
+
+		$(document).ready(function() {
+		 $( "#{{clientname}}" ).dialog({
+                        autoOpen: false,
+                        width: 650,
+                        height:500,
+                        /*buttons: [
+                                {
+                                        text: "Ok",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                },
+                                {
+                                        text: "Cancel",
+                                        click: function() {
+                                                $( this ).dialog( "close" );
+                                        }
+                                }
+                        ]*/
+                });
+                // Link to open the dialog
+		// catch enter key
+		$("#{{clientname}}-msg").keyup(function(event){
+    			if(event.keyCode == 13){
+        			$("#{{clientname}}-msg-button").click();
+   			 }
+		}); //end keyup
+                $("#{{clientname}}-link").click(function( event ) {
+			
+			/*$.get('/open_mark/',{'rooms':'{{clientname}}'},
+				function(return_data)
+				{
+					if (return_data==0){
+						$( "#{{clientname}}" ).dialog( "open" );
+					}
+					});*/
+                        $( "#{{clientname}}" ).dialog( "open" );
+                        event.preventDefault();
+		var client = "{{teacher}}";
+		var auto_refresh = setInterval(
+			  function()
+			  {
+			     if ($("#{{clientname}}").dialog("isOpen")){
+				$.get('/getNewMsg/',{'client':client, 'room':'{{clientname}}' },
+				   function(return_data){
+					if (return_data != "NoNewMessage"){
+						MsgReturn = JSON.parse(return_data);	
+						for (var i=0; i<MsgReturn.length; i++){
+							for ( var key in MsgReturn[i]){
+								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" + MsgReturn[i][key].message );
+							};//end for
+							//$("#{{group}}-chatWin" ).append("<br />" + MsgReturn[i]);
+						};
+						var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+                                		objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll	
+						//$("#{{group}}-chatWin" ).append("<br />" + return_data );
+					} //end if 
+
+				    	//alert(return_data);
+				   } //end callback func*/
+				); //end get 2
+			     } else {
+				clearInterval(auto_refresh);
+			     };
+		       },3000);//for auto refresh
+                });
+		});	
+	</script>	
+
+        <h3><a href="#"  id="{{clientname}}-link"  >{{clientname}}</a></h3>
+        <div id="{{clientname}}" title="chating with {{clientname}}">
+                <div id="contact-right" >
+                        <p> old Boy Linux area</p>
+                        <br />
+                </div>
+                <div id="contact-left" >
+                        <p>contact is here{{message}}</p>
+
+                        <div class="left" id="{{clientname}}-chatWin" >
+                		<p>s nostrud exercitation ullamco laboris nisi ut aliquip ex ea commoddljs,slkdfs,mlkfsk</p>
+                        </div>
+                                <textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> input here</textarea>
+                                <button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend_{{clientname}}()">Send</button>
+
+                </div>
+
+	</div>
+
+</div> <!-- end container-->
+</body>
+</html>

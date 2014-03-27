@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="us">
+<head>
+        <meta charset="utf-8">
+        <title>jQuery UI Example Page</title>
+        <link href="/static/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+        <!-- Le styles -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.js"></script>
+	<script>
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+
+	function openChatWindow(ele){
+		var id = $(ele).attr("id");
+		//$("#tabs ul").append('<li><a href="#test">' + id + '</a></li>');
+		//$("#tabs").append('<div id="test">kdfjafsdfsafsfsfsf</div>');
+		$("#tabs-1").clone().appendTo("#tabs"); // <li><a href="#tabs-1">First</a></li>
+
+	} //end openChatWindow
+	</script>
+	<style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	/*add */
+	.contact-left {
+		/*background-color:#EEEEEE;*/
+		height:95%;
+		width:75%;
+		float:left;
+	}
+	.contact-right {
+		background-color:#6495ED;
+		height:83%;
+		width:25%;
+		float:right;
+	}
+	.div-height{border:1px solid black; width:600px; height:500px; }
+	.div-height3{border:1px solid black; width:150px; height:505px; }
+	.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
+	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
+
+
+.left {
+    position: relative;
+    width:100%; 
+    overflow:auto;
+    height:80%;
+   
+}
+.left2 {
+	position: relative;
+	width:100%;
+	height:80%;
+	float:left;
+
+}
+.contact_list {
+	width:150px;
+	height:100%;
+	font-size:150%;
+	text-align:center;
+	overflow:auto;
+	background-color:#6495ED;
+}
+
+.contact_list2 {
+	width:150px;
+	height:100%;
+	font-size:150%;
+	text-align:center;
+	overflow:auto;
+	background-color:yellow;
+}
+.chat_window{
+    position: relative;
+    text-align: left;
+    margin-left: 170px;
+
+	}
+
+.chat_group{
+    float: left;
+    padding-left:5px;
+    position: relative;
+    height:10px;	
+	}
+.right {
+    position: relative;
+    text-align: left;
+    margin-left: 470px;
+    background-color: yellow;
+	}
+
+.bottom {
+	position:absolute;
+	bottom:-3px;
+	left:4px;
+	height:65px;
+	width:72%;
+	}
+
+.button_bottom {
+        position:absolute;
+        bottom:30px;
+        right:20px;
+        }
+	</style>
+</head>
+
+
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="#">Project name</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="/dash">Dashboard</a></li>
+						<li><a href="/server/">server_manage</a></li>
+						<li><a href="/monitor_summary/">monitor</a></li>
+						<li><a href="#assat">Assat</a></li>
+					</ul>
+
+<ul class="nav pull-right">
+								<li>
+									<a href="#">
+									{% if user.is_authenticated  %}
+										Welcome:<b> {{ user.username }}</b>
+									{%else %}
+										<b> is bad</b>
+									{% endif%}</a>
+</a>
+								</li>
+								<li class="divider-vertical">
+								</li>
+								<li class="dropdown">
+									 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Configuration<strong class="caret"></strong></a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="/log out/">logout</a>
+										</li>
+										<li>
+											<a href="/admin/">Admin</a>
+										</li>
+										<li>
+											<a href="#">oython</a>
+										</li>
+										<li class="divider">
+										</li>
+										<li>
+											<a href="#">link 3</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+
+
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+
+<!--script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.js"></script-->
+
+
+
+<!--div class="container pull-left" id="working_panel"> <container-->
+
+        	<script  type="text/javascript">
+		//$('#list').load('/hide/');
+		var old_clinet= '0'
+        	var auto_refresh = setInterval(
+                	function()
+                	{
+				$.get('/getmax/',function(return_data)
+					{
+						var max_clinet=JSON.parse(return_data);
+						var new_div=document.createElement("div");
+						var maintable=document.getElementById("list");
+						if (old_clinet !=  max_clinet){
+							maintable.appendChild(new_div);
+							$(new_div).load("/hide/");
+							old_clinet=max_clinet;
+							alert ( old_clinet);
+							alert (max_clinet);
+							}		
+					}
+				)
+				//var new_div=document.createElement("div");
+				//var mainDiv=document.getElementById("list");
+				//mainDiv.appendChild(new_div);
+				//$(new_div).load("/hide/");
+				//$('#list').appendChild($("div").load("/hide/ #working_panel") );
+				//$('#list').load("/hide/");
+                        }
+			,3000);
+        	</script>
+
+	<div class="chat_window">
+		<h2>chat list</h2>
+		<div  id="list">
+		</div>
+	</div>
+<!--/div>
+</div> < end container-->
+</body>
+
+</html>

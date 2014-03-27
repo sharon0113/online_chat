@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="us">
+
+
+<div class="container pull-left" id="working_panel"> <!--container-->
+
+
+	<script  type="text/javascript">
+                function MsgSend_{{clientname}}(){
+		var client = "{{teacher}}";
+		message = $("#{{clientname}}-msg").val();
+		if ( message != "" ){
+			var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+			$( "#{{clientname}}-chatWin").append("<p style='color:red;'><br />" + time2 + "<br />&nbsp;&nbsp;" + $("#{{clientname}}-msg").val()+"</p>");
+			$("#{{clientname}}-msg").val('');
+                        var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+                        objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll 滚动条自动下拉
+                                
+                        $.post("/sendMsg/",{msg: message, 'client':client ,'room_name':'{{clientname}}'  }); //推送消息，客户名，聊天室名 
+		}// end if 
+		}
+
+		$(document).ready(function() {
+		 $( "#{{clientname}}" ).dialog({
+                        autoOpen: false,
+                        width: 650,
+                        height:500,
+			resizable: null,
+                        minWidth: 150,
+                        minHeight: 150,
+                });
+                // Link to open the dialog
+		// catch enter key
+		$("#{{clientname}}-msg").keyup(function(event){
+    			if(event.keyCode == 13){
+        			$("#{{clientname}}-msg-button").click();
+   			 }
+		}); //end keyup
+                $("#{{clientname}}-link").click(function( event ) {
+			
+		var client = "{{teacher}}";
+			$.get('/open_mark/',{'rooms':'{{clientname}}','client':client},
+                                function(return_data)
+                                {
+                                        if (return_data==client){
+						alert (return_data);
+						alert (client);
+                                                $( "#{{clientname}}" ).dialog( "open" );
+                                        }
+					else 
+						{alert ("访客"+{{clientname}}+"已经有老师在聊天了")};
+                                        });
+                       // $( "#{{clientname}}" ).dialog( "open" );
+                        event.preventDefault();
+		//var client = "{{teacher}}";
+		var auto_refresh = setInterval(
+			  function()
+			  {
+			     if ($("#{{clientname}}").dialog("isOpen")){
+				$.get('/getNewMsg/',{'client':client, 'room':'{{clientname}}' },
+				   function(return_data){
+					if (return_data != "NoNewMessage"){
+						MsgReturn = JSON.parse(return_data);	
+						for (var i=0; i<MsgReturn.length; i++){
+							for ( var key in MsgReturn[i]){
+								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" + MsgReturn[i][key].message );
+							};//end for
+						};
+						var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+                                		objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll	
+					} //end if 
+
+				   } //end callback func*/
+				); //end get 2
+			     } else {
+				clearInterval(auto_refresh);
+			     };
+		       },3000);//for auto refresh
+                });
+		});	
+	</script>	
+
+        <h3><a href="#"  id="{{clientname}}-link"  >{{clientname}}</a></h3>
+        <div id="{{clientname}}" title="chating with {{clientname}}">
+                <div class="contact-right" >
+                        <p> old Boy Linux area</p>
+                        <br />
+                </div>
+                <div class="contact-left" >
+                        <p>contact is here{{message}}</p>
+
+                        <div class="left" id="{{clientname}}-chatWin" >
+                		<p>s nostrud exercitation ullamco laboris nisi ut aliquip ex ea commoddljs,slkdfs,mlkfsk</p>
+                        </div>
+                                <textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> input here</textarea>
+                                <button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend_{{clientname}}()">Send</button>
+
+                </div>
+
+	</div>
+
+</div> <!-- end container-->
