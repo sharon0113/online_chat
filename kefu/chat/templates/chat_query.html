@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="us">
+<head>
+        <meta charset="utf-8">
+        <title>jQuery UI Example Page</title>
+        <link href="/static/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css"  charset="utf-8"/>
+	
+        <!-- Le styles -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="/static/smohan.face.css" type="text/css" rel="stylesheet">
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+        <script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="/static/smohan.face.js" ></script>
+	<script>
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+
+	</script>
+	<!--script language="javascript" type="text/javascript">
+        var pb_strConfirmCloseMessage;
+        var pb_blnCloseWindow = false;
+        pb_strConfirmCloseMessage ="此页信息会丢失，是不确认要离开";
+        function ConfirmClose() {
+        window.event.returnValue = pb_strConfirmCloseMessage;
+        pb_blnCloseWindow = true;
+        }
+        function ShowConfirmClose(blnValue) {
+        if(blnValue) {
+        document.body.onbeforeunload = ConfirmClose;
+        } else {
+        document.body.onbeforeunload = null;
+        }
+        }
+        </script-->
+	<style>
+	#contact-list {
+		position:relative;
+        	border: 1px solid #000;
+        	margin-top: 0em;
+		margin-left:10em;
+        	width: 20em;
+        	height: 430px;
+        	padding: 5px;
+        	overflow:auto;
+	}	
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	#chat_query{
+		height:80px;
+		width:300px;
+		float:right;
+	}
+	.div-height{border:1px solid black; width:600px; height:500px; }
+	.div-height3{border:1px solid black; width:150px; height:505px; }
+	.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
+	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
+
+	.left-top{
+		position:relative;
+		width:100%;
+		margin:60px;
+		height:60px;}
+	.form_1{
+		position:relative;
+		top:10px;
+		left:80px;
+		}
+	.chat_windows{
+		height:450px;
+		width:480px;
+		float:left;
+		margin-bottom:0;
+		}
+	.chat_log{
+		height:450px;
+		width:600px;
+		float:left;
+		overflow:auto;
+		}
+	</style>
+</head>
+
+
+<body >
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="#">老 男 孩 聊 天 系 统 管 理 后 台</a>
+				<div class="nav-collapse">
+
+				<ul class="nav pull-right">
+								<li>
+									<a href="#">
+									{% if teacher.is_authenticated  %}
+										Welcome:<b> {{ teacher.username }}</b>
+									{%else %}
+										<b> {{teacher.username}}</b>
+									{% endif%}</a>
+								</li>
+								<li class="divider-vertical">
+								</li>
+								<li class="dropdown">
+									 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Configuration<strong class="caret"></strong></a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="/logout/">logout</a>
+										</li>
+										<li>
+											<a href="/admin/" target="view_window">Admin</a>
+										</li>
+									</ul>
+								</li>
+				</ul>
+
+
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<script>
+		function getChatRecord(chat_id){
+			//alert("dfdf"+chat_id);
+			var client_name=chat_id;
+			//alert(client_name);
+			$("#chat_note").html('');
+			$.post("/getlog/",{client_name:client_name},
+				function(return_data){
+                                        
+                                        if (return_data=='NOMessage'){
+                                                $("#chat_note").append("<p style='color:red;'>"+"Sorry!!,聊天记录为空，此用户没有咨询。"+"</p>");
+                                                }
+                                        else {
+                                                log=JSON.parse(return_data);
+                                                for (var a in log){
+                                                        for (var key in log[a]){
+                                                                $("#chat_note").append("<br />"+key +"&nbsp;&nbsp;:#" + log[a][key].client_name + "<br />"+ log[a][key].message+"<br />");
+                                                                //$("#chat_note").append("<br />" + oldmsg[i]);
+                                                                //alert (key);
+                                                        };
+                                                };
+                                                }
+                                }
+				/*function(return_data){
+					log=JSON.parse(return_data);
+					for (var a in log){
+						for (var key in log[a]){
+							$("#chat_note").append("<br />"+key +"&nbsp;&nbsp;:#" + log[a][key].client_name + "<br />"+ log[a][key].message+"<br />");
+							//$("#chat_note").append("<br />" + oldmsg[i]);
+							//alert (key);
+						};
+					};
+				}*/
+			);
+		}	
+		function search_click(){
+                        var time=$("#chat_time").val();
+                        var times=$("#chat_time2").val();
+                        //alert (time);
+			//alert(times);
+                        /*$("#chat_note").dialog("open");*/
+                        $.post("/getoldmsg/",{'time':time,'times':times},
+				function(return_data){
+					list_room=JSON.parse(return_data);
+					$("#contact-list").html('');
+					var new_div=document.createElement("div");
+                                        var maintable=document.getElementById("contact-list");
+					//alert (list_room);
+						
+					for ( var i=0; i<list_room.length; i++ ){
+							var new_li = document.createElement("li");
+							maintable.appendChild(new_li);
+							var list_name=list_room[i];
+							//alert (list_name);
+                                                        $(new_li).append("<a href='javascript:void(0)' onclick='getChatRecord(" +list_name +")'>" + list_name +'号访客咨询记录'+"</a>" );
+							/*$("#contact-list").append(list_room[i]);*/ 
+					};
+				}
+					
+			);
+                }
+		
+	</script>
+	<div class="left-top">
+		<p style="padding-left:158px;font-size:24px;">聊&nbsp;天&nbsp;记&nbsp;录&nbsp;查&nbsp;询</p>
+		<form name="chat_list" action=" " method="get" class="form_1">
+		
+		起始日期：
+		<input type="text" size="15" class="datePicker" id="chat_time"/></br>
+		结束日期：
+		<input type="text" size="15" class="datePicker" id="chat_time2"/>
+		<!--input type="submit" id="query_submit" value="Submit"/-->
+		<button  id="search" type="button" onclick="search_click()"> Query</button>
+		</form>
+		<script src="http://ajax.microsoft.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		$((function($){
+		    $.datepicker.regional['zh-CN'] = {
+		        clearText: '清除',
+		        clearStatus: '清除已选日期',
+		        closeText: '关闭',
+		        closeStatus: '不改变当前选择',
+		        prevText: '<上月',
+		        prevStatus: '显示上月',
+		        prevBigText: '<<',
+		        prevBigStatus: '显示上一年',
+		        nextText: '下月>',
+		        nextStatus: '显示下月',
+		        nextBigText: '>>',
+		        nextBigStatus: '显示下一年',
+		        currentText: '今天',
+		        currentStatus: '显示本月',
+		        monthNames: ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月'],
+		        monthNamesShort: ['一','二','三','四','五','六', '七','八','九','十','十一','十二'],
+		        monthStatus: '选择月份',
+		        yearStatus: '选择年份',
+		        weekHeader: '周',
+		        weekStatus: '年内周次',
+		        dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+		        dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+		        dayNamesMin: ['日','一','二','三','四','五','六'],
+		        dayStatus: '设置 DD 为一周起始',
+		        dateStatus: '选择 m月 d日, DD',
+		        dateFormat: 'yy-mm-dd',
+		        firstDay: 1,
+		        initStatus: '请选择日期',
+		        isRTL: false};
+		    $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+		})(jQuery));
+		
+		$('.datePicker').datepicker();
+		</script>
+	</div>
+	<div class="chat_windows">
+                <ul class="well_1" id="contact-list">
+                </ul>
+        </div>
+	<div id="chat_note" class="chat_log">
+		
+		
+	
+	
+	</div>
+
+</body>
+</html>
+

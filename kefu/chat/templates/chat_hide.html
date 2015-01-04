@@ -2,22 +2,33 @@
 <html lang="us">
 
 
-<div class="container pull-left" id="working_panel"> <!--container-->
+<div id="working_panel"> <!--container-->
 
 
 	<script  type="text/javascript">
+		$(function (){
+                $("a.face").smohanfacebox({
+                        Event : "click",        //触发事件      
+                        divid : "{{clientname}}-contact-face", //外层DIV ID
+                        textid : "{{clientname}}-msg" //文本框 ID
+                	});
+                //解析表情  $('#Zones').replaceface($('#Zones').html());
+        	});
                 function MsgSend_{{clientname}}(){
 		var client = "{{teacher}}";
-		message = $("#{{clientname}}-msg").val();
-		if ( message != "" ){
-			var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+		message =$.trim($("#{{clientname}}-msg").val());
+		if ( message.length !=0 && message!=""){
+			var time2 = new Date().Format("hh:mm:ss");
 			$( "#{{clientname}}-chatWin").append("<p style='color:red;'><br />" + time2 + "<br />&nbsp;&nbsp;" + $("#{{clientname}}-msg").val()+"</p>");
+			$('#{{clientname}}-chatWin').replaceface($('#{{clientname}}-chatWin').html());//替换表情
 			$("#{{clientname}}-msg").val('');
                         var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
                         objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll 滚动条自动下拉
                                 
                         $.post("/sendMsg/",{msg: message, 'client':client ,'room_name':'{{clientname}}'  }); //推送消息，客户名，聊天室名 
+			message = $("#{{clientname}}-msg").val('');
 		}// end if 
+		else {  var doNothing = " " ;}
 		}
 
 		$(document).ready(function() {
@@ -28,23 +39,55 @@
 			resizable: null,
                         minWidth: 150,
                         minHeight: 150,
+			//close:function(event){
+			//	$( "#{{clientname}}-close" ).dialog( "open" );
+			//	},
+			/*open:function(event,ui){
+				var $dialog=$(this);
+				var atext=$(".ui-dialog-titlebar-close").replaceWith('<p class="ui-xlgwr"><span class="ui-icon ui-icon-minusthick">minusthick</span> <sapn class="ui-icon ui-icon-closethick">close</span></p>');
+				alert(atext.text());
+				$(".ui-xlgwr .span").click(function(){
+					var spantext=$(this).text();
+					alert("ok:ui-span"+spantext);
+					if (spantext == "minusthick"){
+						$(this).dialog({
+							position:'top',
+							width:210,
+							height:210
+						});
+					} else if (spantext == "close"){
+						$(this).dialog("close");
+					}
+				});
+			},
+			close:function(){
+				$dialog.dialog("close");
+			},*/
                 });
                 // Link to open the dialog
+		$("#{{clientname}}-close").dialog({
+			autoOPen: false,
+			height:150,
+			width:300,
+			resizable:null,
+			
+		});//chat_close input your name!
 		// catch enter key
 		$("#{{clientname}}-msg").keyup(function(event){
     			if(event.keyCode == 13){
-        			$("#{{clientname}}-msg-button").click();
+        			//$("#{{clientname}}-msg-button").click();
+				MsgSend_{{clientname}}();
    			 }
 		}); //end keyup
                 $("#{{clientname}}-link").click(function( event ) {
-			
+		$("#{{clientname}}-link").css('color','red');
 		var client = "{{teacher}}";
 			$.get('/open_mark/',{'rooms':'{{clientname}}','client':client},
                                 function(return_data)
                                 {
                                         if (return_data==client){
-						alert (return_data);
-						alert (client);
+						//alert (return_data);
+						//alert (client);
                                                 $( "#{{clientname}}" ).dialog( "open" );
                                         }
 					else 
@@ -59,11 +102,13 @@
 			     if ($("#{{clientname}}").dialog("isOpen")){
 				$.get('/getNewMsg/',{'client':client, 'room':'{{clientname}}' },
 				   function(return_data){
-					if (return_data != "NoNewMessage"){
+					if (return_data != "NONewMessage"){
 						MsgReturn = JSON.parse(return_data);	
 						for (var i=0; i<MsgReturn.length; i++){
 							for ( var key in MsgReturn[i]){
-								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" + MsgReturn[i][key].message );
+								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" +"<br />&nbsp;&nbsp;"+ MsgReturn[i][key].message );
+							
+								$('#{{clientname}}-chatWin').replaceface($('#{{clientname}}-chatWin').html());//替换表情
 							};//end for
 						};
 						var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
@@ -74,29 +119,38 @@
 				); //end get 2
 			     } else {
 				clearInterval(auto_refresh);
+			       	//$.post('/close/',{'room':'{{clientname}}','name':''})
 			     };
 		       },3000);//for auto refresh
                 });
 		});	
 	</script>	
 
-        <h3><a href="#"  id="{{clientname}}-link"  >{{clientname}}</a></h3>
+       <a href="#"  id="{{clientname}}-link"  ><font size="3">访客{{clientname}}</font></a>
         <div id="{{clientname}}" title="chating with {{clientname}}">
                 <div class="contact-right" >
-                        <p> old Boy Linux area</p>
-                        <br />
+			<img src="/static/image/kefu.png"/>
+                        <!--p> old Boy Linux area</p-->
                 </div>
                 <div class="contact-left" >
-                        <p>contact is here{{message}}</p>
-
                         <div class="left" id="{{clientname}}-chatWin" >
-                		<p>s nostrud exercitation ullamco laboris nisi ut aliquip ex ea commoddljs,slkdfs,mlkfsk</p>
+                		<p>欢迎访问老男孩Linux!</p>
                         </div>
-                                <textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> input here</textarea>
-                                <button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend_{{clientname}}()">Send</button>
-
-                </div>
+		</div>
+		<div class="contact-text" id="{{clientname}}-contact-face" >
+                        <!--a href="javascript:void(0)" class="face" id="trigger" title="表情"></a-->
+                        <a href="javascript:void(0)" class="face"  title="表情"></a>
+                        <textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"></textarea>
+                        <button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend_{{clientname}}()">Send</button>
+			<!--a href="#" id="{{clientname}}-link2"></a-->
+		</div>
+                <!--/div-->
 
 	</div>
-
-</div> <!-- end container-->
+	<!--div id="{{clientname}}-close" title="Please input a name for visitor">
+		<div class="close-text">
+			<textarea id="{{clientname}}-name" rows="1" cols="1"></textarea> 
+			<button   id="{{clientname}}-name-button">submit</button>
+		</div>
+	</div-->
+</div>

@@ -10,7 +10,8 @@ class Contact(models.Model):
 	client_id=models.IntegerField(unique=True)
 	client_name=models.CharField(max_length=50)
 	content=models.TextField(null=True,blank=True,default='hello!')
-	contact_time=models.DateTimeField()
+	contact_time=models.DateField()
+	contact_session=models.CharField(max_length=50)
 	#user=models.ManyToManyField(user)
 	def __unicode__(self):
 		return self.client_name

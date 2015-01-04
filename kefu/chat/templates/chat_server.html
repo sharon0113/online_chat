@@ -2,43 +2,53 @@
 <html lang="us">
 <head>
         <meta charset="utf-8">
-        <title>jQuery UI Example Page</title>
+        <title>老男孩客服后台</title>
         <link href="/static/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet">
         <!-- Le styles -->
         <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
+	<link href="/static/smohan.face.css" type="text/css" rel="stylesheet">
         <script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
         <script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 	<script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="/static/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="/static/smohan.face.js" ></script>
 	<script>
 
-Date.prototype.Format = function (fmt) { //author: meizz 
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
+	Date.prototype.Format = function (fmt) { //author: meizz 
+	    var o = {
+	        "M+": this.getMonth() + 1, //月份 
+	        "d+": this.getDate(), //日 
+	        "h+": this.getHours(), //小时 
+	        "m+": this.getMinutes(), //分 
+	        "s+": this.getSeconds(), //秒 
+	        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+	        "S": this.getMilliseconds() //毫秒 
+	    };
+	    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    for (var k in o)
+	    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	    return fmt;
+	}
 
 
-	function openChatWindow(ele){
-		var id = $(ele).attr("id");
-		//$("#tabs ul").append('<li><a href="#test">' + id + '</a></li>');
-		//$("#tabs").append('<div id="test">kdfjafsdfsafsfsfsf</div>');
-		$("#tabs-1").clone().appendTo("#tabs"); // <li><a href="#tabs-1">First</a></li>
-
-	} //end openChatWindow
 	</script>
+	<script language="javascript" type="text/javascript">
+        var pb_strConfirmCloseMessage;
+        var pb_blnCloseWindow = false;
+        pb_strConfirmCloseMessage ="此页信息会丢失，是不确认要离开";
+        function ConfirmClose() {
+        window.event.returnValue = pb_strConfirmCloseMessage;
+        pb_blnCloseWindow = true;
+        }
+        function ShowConfirmClose(blnValue) {
+        if(blnValue) {
+        document.body.onbeforeunload = ConfirmClose;
+        } else {
+        document.body.onbeforeunload = null;
+        }
+        }
+        </script>
 	<style>
 	body{
 		font: 62.5% "Trebuchet MS", sans-serif;
@@ -87,9 +97,14 @@ Date.prototype.Format = function (fmt) { //author: meizz
 		float:left;
 	}
 	.contact-right {
-		background-color:#6495ED;
-		height:83%;
+		/*background-color:#6495ED;*/
+		height:76%;
 		width:25%;
+		float:right;
+	}
+	#chat_query{
+		height:80px;
+		width:300px;
 		float:right;
 	}
 	.div-height{border:1px solid black; width:600px; height:500px; }
@@ -98,77 +113,108 @@ Date.prototype.Format = function (fmt) { //author: meizz
 	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
 
 
-.left {
-    position: relative;
-    width:100%; 
-    overflow:auto;
-    height:80%;
-   
-}
-.left2 {
-	position: relative;
-	width:100%;
-	height:80%;
-	float:left;
-
-}
-.contact_list {
-	width:150px;
-	height:100%;
-	font-size:150%;
-	text-align:center;
-	overflow:auto;
-	background-color:#6495ED;
-}
-
-.contact_list2 {
-	width:150px;
-	height:100%;
-	font-size:150%;
-	text-align:center;
-	overflow:auto;
-	background-color:yellow;
-}
-.chat_window{
-    position: relative;
-    text-align: left;
-    margin-left: 170px;
-
+	.left {
+	    position: relative;
+	    width:100%; 
+	    overflow:auto;
+	    height:80%;
+	   
 	}
-
-.chat_group{
-    float: left;
-    padding-left:5px;
-    position: relative;
-    height:10px;	
+	.left2 {
+		position: relative;
+		width:100%;
+		height:80%;
+		float:left;
+	
 	}
-.right {
-    position: relative;
-    text-align: left;
-    margin-left: 470px;
-    background-color: yellow;
+	#contact-list {
+		border: 1px solid #000;
+		margin: 0em;
+		width: 10em;
+		height: 500px;
+		padding: 5px;
+		overflow:auto;
 	}
-
-.bottom {
-	position:absolute;
-	bottom:-3px;
-	left:4px;
-	height:65px;
-	width:72%;
+	
+	.contact_list2 {
+		width:150px;
+		height:100%;
+		font-size:150%;
+		text-align:center;
+		overflow:auto;
+		background-color:yellow;
 	}
-
-.button_bottom {
-        position:absolute;
-        bottom:30px;
-        right:20px;
-        }
-	</style>
+	.chat_window{
+	    position: relative;
+	    text-align: left;
+	    margin-left: 10px;
+	
+		}
+	
+	.chat_group{
+	    float: left;
+	    padding-left:5px;
+	    position: relative;
+	    height:10px;	
+		}
+	.right {
+	    position: relative;
+	    text-align: left;
+	    margin-left: 470px;
+	    background-color: yellow;
+		}
+	.contact-text{
+	        position:absolute;
+	        bottom:-3px;
+	        left:5px;
+	        height:23%;
+	        width:98%
+	        }
+	
+	.bottom {
+		position:absolute;
+		bottom:-3px;
+		left:4px;
+		height:65px;
+		width:72%;
+		resize:none;
+		}
+	
+	.button_bottom {
+	        position:absolute;
+	        bottom:30px;
+	        right:20px;
+	        }
+	.chat_note{
+		position:absolute;
+		height:100px;
+		width:300px;
+	}
+	p.ui-xlgwr span.ui-icon{
+		position:relative;
+		float:left;
+		margin:0.4em 0.5em 0 0.5em;
+		cursor:pointer;
+		z-index:999;
+	}
+	p.ui-xlgwr{
+		position:absolute;
+		top:1px;
+		padding:0;
+		right:5px;
+		display:inline;
+	}
+	.ui-dialog .ui-dialog-content{
+		overflow:hidden;
+	}
+	#main_window{
+		}
+		</style>
 </head>
 
 
-<body>
-
-	<div class="navbar navbar-fixed-top">
+<body onload="ShowConfirmClose(true);">
+	<div id="nav-bar-top" class="navbar navbar-fixed-top collapse">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -176,22 +222,22 @@ Date.prototype.Format = function (fmt) { //author: meizz
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="#">Project name</a>
+				<a class="brand" href="#">老 男 孩 聊 天 系 统 管 理 后 台</a>
 				<div class="nav-collapse">
-					<ul class="nav">
+					<!--ul class="nav">
 						<li class="active"><a href="/dash">Dashboard</a></li>
 						<li><a href="/server/">server_manage</a></li>
 						<li><a href="/monitor_summary/">monitor</a></li>
 						<li><a href="#assat">Assat</a></li>
-					</ul>
+					</ul-->
 
 <ul class="nav pull-right">
 								<li>
 									<a href="#">
-									{% if user.is_authenticated  %}
-										Welcome:<b> {{ user.username }}</b>
+									{% if teacher.is_authenticated  %}
+										Welcome:<b> {{ teacher.username }}</b>
 									{%else %}
-										<b> is bad</b>
+										<b> {{teacher.username}}</b>
 									{% endif%}</a>
 </a>
 								</li>
@@ -201,37 +247,25 @@ Date.prototype.Format = function (fmt) { //author: meizz
 									 <a data-toggle="dropdown" class="dropdown-toggle" href="#">Configuration<strong class="caret"></strong></a>
 									<ul class="dropdown-menu">
 										<li>
-											<a href="/log out/">logout</a>
+											<a href="/logout/">logout</a>
 										</li>
 										<li>
-											<a href="/admin/">Admin</a>
+											<a href="/admin/" target="view_window">Admin</a>
 										</li>
 										<li>
-											<a href="#">oython</a>
-										</li>
-										<li class="divider">
-										</li>
-										<li>
-											<a href="#">link 3</a>
+											<a href="/query/" target="view_window">Query</a>
 										</li>
 									</ul>
 								</li>
 							</ul>
 
-
 				</div><!--/.nav-collapse -->
 			</div>
 		</div>
 	</div>
-
-
-<!--script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="/static/bootstrap/js/bootstrap.js"></script-->
-
-
-
-<!--div class="container pull-left" id="working_panel"> <container-->
-
+<div>
+	 	<h2><i id="collapse-nav-bar"  class="icon-chevron-up"></i></h2>
+</div>
         	<script  type="text/javascript">
 		//$('#list').load('/hide/');
 		var old_clinet= '0'
@@ -242,33 +276,61 @@ Date.prototype.Format = function (fmt) { //author: meizz
 					{
 						var max_clinet=JSON.parse(return_data);
 						var new_div=document.createElement("div");
-						var maintable=document.getElementById("list");
+						var maintable=document.getElementById("contact-list");
+						//ele=$("<li><br/></li>");
+						var new_li = document.createElement("li");
 						if (old_clinet !=  max_clinet){
-							maintable.appendChild(new_div);
-							$(new_div).load("/hide/");
+							maintable.appendChild(new_li);
+							$(new_li).load("/hide/"); 
 							old_clinet=max_clinet;
-							alert ( old_clinet);
-							alert (max_clinet);
+							$('#new_vistor_sound').html("<embed src='/static/image/new_msg_voice.wav' hidden=true autostart=true loop=false>");
 							}		
 					}
 				)
-				//var new_div=document.createElement("div");
-				//var mainDiv=document.getElementById("list");
-				//mainDiv.appendChild(new_div);
-				//$(new_div).load("/hide/");
-				//$('#list').appendChild($("div").load("/hide/ #working_panel") );
 				//$('#list').load("/hide/");
                         }
 			,3000);
+		function search_click(){
+			var name=$("#text_search").val();
+			//alert (name);
+			$("#chat_note").dialog("open");
+			$.post("/getoldmsg/",{user:name},
+				function(return_data){
+					oldmsg=JSON.parse(return_data);
+					$("#chat_note").html('');
+					//alert (oldmsg);
+					//alert(oldmsg.length);
+					for (var i in oldmsg){
+						for (var key in oldmsg[i]){
+							$("#chat_note").append("<br />"+key +":#" + oldmsg[i][key].client_name + "<br />"+ oldmsg[i][key].message);
+							//$("#chat_note").append("<br />" + oldmsg[i]);
+						//alert (key);
+						};
+					};
+					//$("#chat_note").append(oldmsg);
+					//alert ({{b}});
+					//alert("data return:"+return_data);
+				});
+		}
+		$(function() {
+			$("#chat_note").dialog({
+				autoOpen:false,
+				width:400,
+				height:500,
+				});
+		});	
+		$("#collapse-nav-bar").click(function(){
+			$("#nav-bar-top").fadeToggle();
+		});
         	</script>
-
+<div id="main_window">
 	<div class="chat_window">
-		<h2>chat list</h2>
-		<div  id="list">
-		</div>
+		<p style="font-size:16px;">访客列表</p>
+		<ul class="well" id="contact-list">
+		</ul>
 	</div>
-<!--/div>
-</div> < end container-->
+	<div id="new_vistor_sound"></div>
+</div> 
 </body>
 
 </html>

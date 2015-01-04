@@ -1,289 +1,358 @@
 <!doctype html>
-<html lang="us">
+
+<html lang="cn">
 <head>
         <meta charset="utf-8">
-        <title>jQuery UI Example Page</title>
+        <title>老男孩教育</title>
         <link href="/static/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet">
         <!-- Le styles -->
         <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
+	
+        <link href="/static/smohan.face.css" type="text/css" rel="stylesheet">
         <script src="/static/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
         <script src="/static/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+        <!--link href="/static/smohan.face.css" type="text/css" rel="stylesheet"-->
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script--> 
+	<script type="text/javascript" src="/static/smohan.face.js" ></script>
 		
-		<script>
-	
-Date.prototype.Format = function (fmt) { //author: meizz 
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
+	<script>
+		Date.prototype.Format = function (fmt) { //author: meizz 
+		    var o = {
+		        "M+": this.getMonth() + 1, //月份 
+		        "d+": this.getDate(), //日 
+		        "h+": this.getHours(), //小时 
+		        "m+": this.getMinutes(), //分 
+		        "s+": this.getSeconds(), //秒 
+		        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		        "S": this.getMilliseconds() //毫秒 
+		    };
+		    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		    for (var k in o)
+		    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		    return fmt;
+		}
 
-
-	function openChatWindow(ele){
-		var id = $(ele).attr("id");
-		//$("#tabs ul").append('<li><a href="#test">' + id + '</a></li>');
-		//$("#tabs").append('<div id="test">kdfjafsdfsafsfsfsf</div>');
-		$("#tabs-1").clone().appendTo("#tabs"); // <li><a href="#tabs-1">First</a></li>
-
-	} //end openChatWindow
+	</script>
+	<script language="javascript" type="text/javascript">
+		var pb_strConfirmCloseMessage;
+		var pb_blnCloseWindow = false;
+		pb_strConfirmCloseMessage ="此页信息会丢失，是不确认要离开";
+		function ConfirmClose() {
+			window.event.returnValue = pb_strConfirmCloseMessage;
+			pb_blnCloseWindow = true;
+		}
+		function ShowConfirmClose(blnValue) {
+			if(blnValue) {
+			document.body.onbeforeunload = ConfirmClose;
+			} 
+			else {
+			document.body.onbeforeunload = null;
+			}	
+		}
 	</script>
 	<style>
-	body{
-		font: 62.5% "Trebuchet MS", sans-serif;
-		margin: 50px;
-	}
-	.demoHeaders {
-		margin-top: 2em;
-	
-	}
-	#dialog-link {
-		padding: .4em 1em .4em 20px;
-		text-decoration: none;
-		position: relative;
-	}
-	#dialog-link span.ui-icon {
-		margin: 0 5px 0 0;
-		position: absolute;
-		left: .2em;
-		top: 50%;
-		margin-top: -8px;
-	}
-	#icons {
-		margin: 0;
-		padding: 0;
-	}
-	#icons li {
-		margin: 2px;
-		position: relative;
-		padding: 4px 0;
-		cursor: pointer;
-		float: left;
-		list-style: none;
-	}
-	#icons span.ui-icon {
-		float: left;
-		margin: 0 4px;
-	}
-	.fakewindowcontain .ui-widget-overlay {
-		position: absolute;
-	}
-	/*add */
-	#contact-left {
-		/*background-color:#EEEEEE;*/
-		height:95%;
-		width:75%;
-		float:left;
-	}
-	#contact-right {
-		background-color:#6495ED;
-		height:83%;
-		width:25%;
-		float:right;
-	}
-	
-	#daxiao {
-		min-width:20px;
-		min-height:20px;
-	}	
-	.div-height{border:1px solid black; width:400px; height:500px; }
-	.div-height3{border:1px solid black; width:150px; height:505px; }
-	.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
-	.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
+		body{
+			font: 62.5% "Trebuchet MS", sans-serif;
+			margin: 50px;
+		}
+		.demoHeaders {
+			margin-top: 2em;
+		
+		}
+		#dialog-link {
+			padding: .4em 1em .4em 20px;
+			text-decoration: none;
+			position: relative;
+		}
+		#dialog-link span.ui-icon {
+			margin: 0 5px 0 0;
+			position: absolute;
+			left: .2em;
+			top: 50%;
+			margin-top: -8px;
+		}
+		#icons {
+			margin: 0;
+			padding: 0;
+		}
+		#icons li {
+			margin: 2px;
+			position: relative;
+			padding: 4px 0;
+			cursor: pointer;
+			float: left;
+			list-style: none;
+		}
+		#icons span.ui-icon {
+			float: left;
+			margin: 0 4px;
+		}
+		.fakewindowcontain .ui-widget-overlay {
+			position: absolute;
+		}
+		/*add */
+		.contact-left {
+			height:75%;
+			width:75%;
+			float:left;
+		}
+		.contact-right {
+			height:76%;
+			width:25%;
+			float:right;
+		}
+		
+		#daxiao {
+			min-width:20px;
+			min-height:20px;
+		}	
+		.div-height{border:1px solid black; width:400px; height:500px; }
+		.div-height3{border:1px solid black; width:150px; height:505px; }
+		.div-sider{border:1px solid black; width:20%; height:400px;position:relative;} 
+		.div-sider2{border:1px solid black; width:80%; height:380px;float:left;position:relative}
 
 
-.left {
-    position: relative;
-    width:100%; 
-    overflow:auto;
-    height:80%;
-   
-}
-.left2 {
-	position: relative;
-	width:100%;
-	height:80%;
-	float:left;
-
-}
-.contact_list {
-	width:50px;
-	height:100%;
-	font-size:150%;
-	text-align:center;
-	overflow:auto;
-	background-color:#6495ED;
-}
-
-.contact_list2 {
-	width:50px;
-	height:100%;
-	font-size:150%;
-	text-align:center;
-	overflow:auto;
-	background-color:yellow;
-}
-.chat_window{
-    position: relative;
-    text-align: left;
-    margin-left: 170px;
-
-	}
-
-.chat_group{
-    float: left;
-    padding-left:5px;
-    position: relative;
-    height:10px;	
-	}
-.right {
-    position: relative;
-    text-align: left;
-    margin-left: 470px;
-    background-color: yellow;
-	}
-
-.bottom {
-	position:absolute;
-	bottom:-3px;
-	left:4px;
-	height:65px;
-	width:72%;
-	}
-
-.button_bottom {
-        position:absolute;
-        bottom:30px;
-        right:20px;
-        }
+		.left {
+		    	position: relative;
+		    	width:100%; 
+		    	height:100%;
+			overflow:auto;
+		   
+		}
+		.left2 {
+			position: relative;
+			width:100%;
+			height:80%;
+			float:left;
+		
+		}
+		.contact_list {
+			width:50px;
+			height:100%;
+			font-size:150%;
+			text-align:center;
+			overflow:auto;
+			background-color:#6495ED;
+		}
+		
+		.contact_list2 {
+			width:50px;
+			height:100%;
+			font-size:150%;
+			text-align:center;
+			overflow:auto;
+			background-color:yellow;
+		}
+		.chat_window{
+		    	position: relative;
+		    	text-align: left;
+		    	margin-left: 170px;
+		
+			}
+		
+		.chat_group{
+		    	float: left;
+		    	padding-left:5px;
+		    	position: relative;
+		    	height:10px;	
+			}
+		.right {
+		    	position: relative;
+		    	text-align: left;
+		    	margin-left: 470px;
+		    	background-color: yellow;
+			}
+		.contact-text{
+			position:absolute;
+			bottom:-3px;
+			left:5px;
+			height:24%;
+			width:98%
+			}
+		.bottom {
+			position:absolute;
+			bottom:-3px;
+			left:4px;
+			height:65px;
+			width:72%;
+			resize:none;
+			}
+		
+		.button_bottom {
+		        position:absolute;
+		        bottom:30px;
+		        right:20px;
+		        }
+		.ui-dialog-titlebar-close{
+			display:none;
+			}
+		.ui-dialog .ui-dialog-content{
+			overflow:hidden;
+			}
 	</style>
 </head>
 
 
-<body>
-<div class="container pull-left" id="working_panel"> <!--container-->
+<body onload="ShowConfirmClose(true);">
+<div class="pull-left well" align="left" style="background-color:orange;">
+<p>本聊天系统由老男孩Python运维开发第2期学员 
+赵红金 (qq:546847000)帮助开发，特此鸣谢！
+<hr>
+本产品源代码已开放，GitHub地址：https://github.com/sharon0113/online_chat 
+</p>
+</div>
 
+</div>
+	<div class="container pull-left" id="working_panel"> <!--container-->
 
-<p><a href="#"  id="dialog-link"  class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>{{clientname}}</a></p>
-
-<!--div id="dialog" title="Dialog Title">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div-->
-<script  type="text/javascript">
-                function MsgSend(){
-		//client =$( "#{{clientname}}").val();
-		message = $("#{{clientname}}-msg").val();
-
-		if ( message != "" ){
-			var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
-			$( "#{{clientname}}-chatWin").append("<p style='color:red;'><br />" + time2 + "<br />&nbsp;&nbsp;" + $("#{{clientname}}-msg").val()+ "</p>");
-			$("#{{clientname}}-msg").val('');
-			var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
-			objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll 滚动条自动下拉
-				
-			$.post("/sendMsg/",{msg: message, 'client':'{{clientname}}' ,'room_name':'{{clientname}}'  }); //推送消息，客户名，聊天室名 
-		}// end if 
+	<script language="JavaScript"> 
+	//setTimeout('flash_title()',2000); //2秒之后调用一次
+	//var auto_refresh = setInterval('flash_title()',1000); 
+		function flash_title()  
+		{ 
+		    //当窗口效果为最小化，或者没焦点状态下才闪动
+		    if isMinStatus()
+		    {
+		        newMsgCount();
+		    }
+		    else
+		    {
+		        document.title='OLDBOY-Linux';//窗口没有消息的时候默认的itle内容
+		        window.clearInterval();
+		    }
+		} 
+		//消息提示
+		var flag=false;
+		function newMsgCount(){
+		    if(flag){
+		        flag=false;
+		        document.title='【新消息】';
+		    }else{
+		        flag=true;
+		        document.title='【　　　】';
+		    }
+		    window.setTimeout('flash_title(0)',380); 
 		}
-
-		$(function() {
-		 $( "#{{clientname}}" ).dialog({
-                        autoOpen: false,
-                        width: 650,
-                        height:500,
-			resizable: null,
-			minWidth: 150,
-			minHeight: 150,
-                        /*buttons: [
-                                {
-                                        text: "Ok",
-                                        click: function() {
-                                                $( this ).dialog( "close" );
-                                        }
-                                },
-                                {
-                                        text: "Cancel",
-                                        click: function() {
-                                                $( this ).dialog( "close" );
-                                        }
-                                }
-                        ]*/
-                });
-                // Link to open the dialog
-		// catch enter key
-		$("#{{clientname}}-msg").keyup(function(event){
-    			if(event.keyCode == 13){
-        			$("#{{clientname}}-msg-button").click();
-   			 }
-		}); //end keyup
-                $("#{{clientname}}-link").click(function( event ) {
-			/*$.post("/makeuser/",{'client_name':'0'});*/
-                        $( "#{{clientname}}" ).dialog( "open" );
-                        event.preventDefault();
-		//	client =$("#{{clientname}}").val();
-			var auto_refresh = setInterval(
-			  function()
-			  {
-			     if ($("#{{clientname}}").dialog("isOpen")){
-				$.get('/getNewMsg/',{'client':'{{clientname}}', 'room':'{{clientname}}' },
-				   function(return_data){
-					/*var content = document.getElementById('cmd_result');
-					var CMD_RESULT = JSON.parse(return_data);
-					var finished_tasks = CMD_RESULT[1].task_info.success_num + CMD_RESULT[1].task_info.failed_num	
-					if(finished_tasks == CMD_RESULT[1].task_info.total_task){
-					 clearInterval(auto_refresh);
-					}// end if */
-					if (return_data != "NoNewMessage"){
-						MsgReturn = JSON.parse(return_data);	
-						for (var i=0; i<MsgReturn.length; i++){
-							for ( var key in MsgReturn[i]){
-								$("#{{clientname}}-chatWin" ).append("<br />" + key + ":#" + MsgReturn[i][key].client_name + "<br />" + MsgReturn[i][key].message );
-							};//end for
-							//$("#{{group}}-chatWin" ).append("<br />" + MsgReturn[i]);
-						};
-						var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
-                                		objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll	
-						//$("#{{group}}-chatWin" ).append("<br />" + return_data );
-					} //end if 
-
-				    	//alert(return_data);
-				   } //end callback func
-				); //end get 2
-			     } else {
-				clearInterval(auto_refresh);
-			     };
-		       },3000);//for auto refresh
-                });
-		});	
-	</script>	
-
-        <h3><a href="#"  id="{{clientname}}-link"  >clientname</a></h3>
-        <div id="{{clientname}}"  title="chating with KeFu">
-		<div id="contact-right" >
-			<p> old Boy Linux area</p>
-			<br />
-		</div>
-		<div id="contact-left" >
-			<p>contact is here{{message}}</p>
+		//判断窗口是否最小化
+		//在Opera中还不能显示
+		var isMin = false;
+		function isMinStatus() {
+		    //除了Internet Explorer浏览器，其他主流浏览器均支持Window outerHeight 和outerWidth 属性
+		    if(window.outerWidth != undefined && window.outerHeight != undefined){
+		        isMin = window.outerWidth <= 160 && window.outerHeight <= 27;
+		    }else{
+		        isMin = window.outerWidth <= 160 && window.outerHeight <= 27;
+		    }
+		    //除了Internet Explorer浏览器，其他主流浏览器均支持Window screenY 和screenX 属性
+		    if(window.screenY != undefined && window.screenX != undefined ){
+		        isMin = window.screenY < -30000 && window.screenX < -30000;//FF Chrome             
+		    }else{
+		        isMin = window.screenTop < -30000 && window.screenLeft < -30000;//IE
+		    }
+		    return isMin;
+		}
+	</script> 
+	
+	<script  type="text/javascript">
 			
-			<div class="left" id="{{clientname}}-chatWin" > 
-                <p>s nostrud exercitation ullamco laboris nisi ut aliquip ex ea commoddljs,slkdfs,mlkfsk</p>
-		<!--textarea  rows="15" clos="40">chat list</textarea-->
+		$(function (){
+	        	$("a.face").smohanfacebox({
+	                	Event : "click",        //触发事件      
+	                	divid : "{{clientname}}-contact-face", //外层DIV ID
+	                	textid : "{{clientname}}-msg" //文本框 ID
+	        	});
+	        	//解析表情  $('#Zones').replaceface($('#Zones').html());
+		});
+	                function MsgSend(){
+			//client =$( "#{{clientname}}").val();
+			message = $.trim($("#{{clientname}}-msg").val() );
+			//alert(message.length);
+			if ( message.length !=0 && message!="" ){
+				var time2 = new Date().Format("hh:mm:ss");
+				$( "#{{clientname}}-chatWin").append("<p style='width:440px;color:red;'><br />" + time2 + "<br />&nbsp;&nbsp;" + $("#{{clientname}}-msg").val()+ "</p>");
+				
+	         		$('#{{clientname}}-chatWin').replaceface($('#{{clientname}}-chatWin').html());//替换表情
+				$("#{{clientname}}-msg").val('');
+				var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+				objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll 滚动条自动下拉
+	
+				$.post("/sendMsg/",{msg: message, 'client':'{{clientname}}' ,'room_name':'{{clientname}}'  }); //推送消息，客户名，聊天室名 
+				message=$("#{{clientname}}-msg").val('');
+			}// end if 
+			else {  var doNothing = " " ;}
+				//$("#{{clientname}}-msg").val('');
+			}
+					
+			$(function() {
+			 $( "#{{clientname}}" ).dialog({
+	                        autoOpen: true,
+	                        width: 650,
+	                        height:500,
+				resizable: null,
+				minWidth: 150,
+				minHeight: 150,
+	                });
+	                // Link to open the dialog
+			// catch enter key
+			$("#{{clientname}}-msg").keyup(function(event){
+	    			if(event.keyCode == 13){
+	        				//$("#{{clientname}}-msg-button").click();
+					MsgSend();
+	   			 }
+	
+			}); //end keyup
+			var auto_refresh = setInterval(
+				function()
+				  {
+				     if ($("#{{clientname}}").dialog("isOpen")){
+					$.get('/getNewMsg/',{'client':'{{clientname}}', 'room':'{{clientname}}' },
+					   function(return_data){
+						if (return_data != "NONewMessage"){
+							MsgReturn = JSON.parse(return_data);	
+							for (var i=0; i<MsgReturn.length; i++){
+								for ( var key in MsgReturn[i]){
+									$("#{{clientname}}-chatWin" ).append("<br /><b>咨询老师</b> &nbsp;" +key + "<br />&nbsp;&nbsp;"+ MsgReturn[i][key].message +"<br/>");
+									$('#{{clientname}}-chatWin').replaceface($('#{{clientname}}-chatWin').html());//替换表情
+								};//end for
+							};
+							var objDiv = document.getElementById("{{clientname}}-chatWin"); // auto scroll
+	                                		objDiv.scrollTop = objDiv.scrollHeight;   // auto scroll	
+							
+						} //end if 
+	
+					   } //end callback func
+					); //end get 2
+				     } else {
+					clearInterval(auto_refresh);
+				     };
+			       },3000);//for auto refresh
+			});	
+	</script>
+		<h3><a href="#"  id="{{clientname}}-link"  ></a></h3>
+	        <div id="{{clientname}}"  title="老男孩Linux | 课程咨询">
+			<div class="contact-right" >
+				<img src="/static/image/kefu_photo.jpg"/>
+				<br><br>
+				<div class="well" style="background-color:white">  
+				在线时间:9:30~21:00 
+				<hr/>		
+				咨询电话：<br/>010-60747396 
+				18911718229 18600338340
+
+				</div>
 			</div>
-				<textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> input here</textarea>
-             			<button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend()">Send</button>		
-		
-		</div>	
-	</div>
+			<div class="contact-left">
+				<div class="left" id="{{clientname}}-chatWin" > 
+	               			 <p><br><b>咨询老师: </b>您好，老男孩Linux是国内少有的专注于Linux高端运维实战，Python运维开发的教育机构，学校承诺，所有面授课程，学完后不满意无条件全额退款！请问有什么可以帮您的？</p>
+				</div>
+			</div>
+			<div class="contact-text" id="{{clientname}}-contact-face" >
+				<a href="javascript:void(0)" class="face" id="trigger" title="表情"></a>
+				<textarea align=left id="{{clientname}}-msg" name='msg' class="bottom"> </textarea>
+	             		<button   align=right id="{{clientname}}-msg-button" type="button" name="{{clientname}}" class="button_bottom btn btn-success" onclick="MsgSend()">Send</button>
+			</div>	
+		</div>
 </div> <!-- end container-->
 </div>
 </body>
